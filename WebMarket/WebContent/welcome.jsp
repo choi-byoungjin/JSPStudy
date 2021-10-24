@@ -7,11 +7,7 @@
 <title>Welcome</title>
 </head>
 <body>
-	<nav class = "navbar navbar-expand navbar-dark bg-dark">
-		<div class = "container">
-			<a class = "navbar-brand" href="./welcome.jsp">Home</a>
-		</div>
-	</nav>
+	<%@ include file="menu.jsp" %> <!-- 머리글에 해당하는 menu.jsp파일의 내용을 포함하도록 include 디렉티브 태그를 작성 -->
 	<%! String greeting = "웹 쇼핑몰에 오신 것을 환영합니다"; /* 변수 greeting에 한글 문자열을 저장하도록 선언문 태그를 작성합니다. */
 	String tagline = "Welcome to Web Market!";%>
 	<div class = "jumbotron">
@@ -43,8 +39,6 @@
 			%> <!-- 현재 시각을 출력하도록 스크립틀릿 태그 작성 -->
 		</div>
 	</div>
-	<footer class = "container">
-		<p>&copy; WebMarket</p>
-	</footer>
+	<%@ include file="footer.jsp" %><!-- 바닥글에 해당하는 footer.jsp파일의 내용을 포함하도록 include 디렉티브 태그를 작성 -->
 </body>
 </html>
