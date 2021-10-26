@@ -197,6 +197,7 @@ JspDestroy() - 소멸
   ```
   
 > 이클립스에서 [Source]-[Generate Getters and Setters] 메뉴 사용하면 Getter()/Setter() 메소드 자동 추가
+> [Source]-[Generate Constructors from Superclass]에서 기본 생성자 자동 추가
 </br>
 
 ### useBean 액션 태그로 자바빈즈 사용하기
