@@ -226,3 +226,4 @@ if (member == null){
     request.setAttribute("member", member);
 }
 ```
+### setProperty 액션 태그로 프로퍼티의 값 저장하기
