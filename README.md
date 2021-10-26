@@ -162,3 +162,66 @@ JspDestroy() - 소멸
 - first.jap 파일에서 second.jsp 파일로 매개변수 값을 전송하여 출력함
 - 단독으로 사용되지 못하며 <jsp:forward>나 <jsp:include> 태그의 내부에 사용됨
 - 다른 페이지에 여러 개의 정보를 전송해야 할 때는 다중의 param 액션 태그 사용 가능
+
+## 자바빈즈 액션 태그의 기능과 사용법
+- JSP 페이지의 주요 기능 중 하나는 데이터를 보여주는 것
+- 하나의 JSP 페이지에 데이터를 보여주기 위한 자바 코드와 단순히 화면을 출력하는 HTML 코드를 함께 작성하면 기능을 확장하거나 코드를 재사용하는 데 어려움
+- 효율을 높이기 위해 HTML코드 부분과 자바 코드(데이터를 처리하는 부분의 로직)를 구분하여 작성하고 로직 부분의 코드에 자바빈즈 클래스를 사용한다.
+
+### 자바빈즈 개요
+- 동적 콘텐츠 개발을 위해 자바 코드를 사용하여 자바 클래스로 로직을 작성하는 방법
+- JSP와 자바빈즈의 흐름
+  1. 웹 브라우저가 JSP 페이지에 요청을 전송한다.
+  2. JSP 페이지는 자바빈즈와 통신한다.
+  3. 자바빈즈가 데이터베이스에 연결된다.
+  4. JSP 페이지가 브라우저에 응답한다.
+- 자바빈즈는 데이터 표현을 목적으로하는 자바 클래스 이므로 기존의 자바 클래스를 작성하는 방법과 동일하다.
+- 자바빈즈는 데이터를 담는 변수인 프로퍼티(property)와 데이터를 가져오거나 저장하는 메소드로 구성된다.
+- 자바빈즈를 작성할 때는 다음 규칙을 따라야 한다.
+  1. 자바 클래스는 java.io.Serializable 인터페이스를 구현해야 한다.
+  2. 인수가 없는 기본 생성자가 있어야 한다.
+  3. 모든 멤버 변수이 프로퍼티는 private 접근 지정자로 설정해야 한다.
+  4. 모든 멤버 변수인 프로퍼티는 Getter/Setter() 메소드가 존재해야 한다.
+    - Getter()메소드 : 멤버 변수에 저장된 값을 가져올 수 있는 메소드
+    - Setter()메소드 : 멤버 변수에 값을 저장할 수 있는 메소드
+> Java.io.Serializable 인터페이스는 생략 가능하나 자바빈즈 규약에 명시된 내용으로, 자바빈즈에 저장된 프로퍼티를 포함한 채로 파일 시스템에 저장되거나 네트워크로 전송될 수 있도록 객체 직렬화를 제공해야 하므로 implement 해야 한다.
+> 인수(Argument)와 인자(Parameter, 매개변수)의 차이
+>  - 매개변수는 함수를 정의할 때 외부로부터 받아들이는 임의의 값을 의미
+>  - 인수는 함수를 호출할 때 사용되는 값 
+  ```
+  function 함수(aaa, bbb){//aaa와 bbb는 파라미터
+      return aaa+bbb;
+  }
+  함수 호출해서 사용
+  int result = 함수(3,4); //3,4는 인수
+  ```
+  
+> 이클립스에서 [Source]-[Generate Getters and Setters] 메뉴 사용하면 Getter()/Setter() 메소드 자동 추가
+</br>
+
+### useBean 액션 태그로 자바빈즈 사용하기
+- useBean 액션 태그는 설정된 id 속성과 scope 속성을 바탕으로 자바빈즈의 객체를 검색하고, 객체가 발견되지 않으면 빈 객체를 생성한다.
+```
+<jsp:useBean id= "자바빈즈 식별이름" class= "자바빈즈 이름" scope= "범위" />}
+```
+- useBean 액션 태그의 속성
+
+|속성|설명|
+|----|----|
+|id|자바빈즈를 식별하기 위한 이름|
+|class|패키지 이름을 포함한 자바빈즈 이름이다. 자바빈즈는 인수가 없는 기존 생성자가 있어야 하며 추상 클래스를 사용할 수 없다|
+|scope|자바빈즈가 저장되는 영역을 설정한다. page(기본 값), request, session, application 중 하나의 값을 사용한다.|
+
+> 추상 메소드(abstract method)란 자식 클래스에서 반드시 오버라이딩해야만 사용할 수 있는 메소드를 의미한다.
+> http://tcpschool.com/java/java_polymorphism_abstract
+
+- useBean 액션 태그 사용 예
+```
+<jsp:useBean id= "member" class="com.dto.MemberBean" scope="page" />
+
+MemberBean member = (MemberBean) request.getAttribute("member");
+if (member == null){
+    member = new MemberBean();
+    request.setAttribute("member", member);
+}
+```
