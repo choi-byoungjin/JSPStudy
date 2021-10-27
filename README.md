@@ -242,6 +242,7 @@ setProperty 액션 태그의 속성
 
 > 메서드 : 객체에 소속된 함수  
 > 프로퍼티 : 객체에 소속된 변수
+> https://m.blog.naver.com/magnking/220966405605
 
 ```
 <jsp:setProperty name="자바빈즈 식별이름" property="프로퍼티 이름" value="값" />
