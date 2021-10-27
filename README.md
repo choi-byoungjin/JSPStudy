@@ -227,3 +227,115 @@ if (member == null){
 }
 ```
 ### setProperty 액션 태그로 프로퍼티의 값 저장하기
+
+- setProperty 액션 태그는 useBean 액션 태그와 함깨 자바빈즈의 Setter() 메소드에 접근하여 자바빈즈의 멤버 변수인 프로퍼티의 값을 저장하는 태그
+- setProperty 태그는 폼 페이지로부터 전달되는 요청 파라미터의 값을 직접 저장하거나 </br> 자바빈즈의 프로퍼티로 변경하여 값을 저장할 수 있다</br> 또는 모든 자바빈즈 프로퍼티 이름과 동일하게 요청 파라미터를 설정할 수 있다
+
+setProperty 액션 태그의 속성
+
+|속성|설명|
+|----|----|
+|name|useBean 태그에 id 속성 값으로 설정된 자바빈즈를 식별하기 위한 이름이다.|
+|property|자바빈즈의 프로퍼티 이름이다. 만약 프로퍼티 이름에 * 를 사용하면 모든 요청 파라미터가 자바빈즈 프로퍼티의 Setter() 메소드에 전달됨을 의미한다. |
+|value|변경할 자바빈즈의 프로퍼티 값이다. 만약 프로퍼티의 값이 null이거나 존재하지 않는 요청 파라미터인 경우에는 SetProperty 액션 태그가 무시된다.|
+|param|자바빈즈의 프로퍼티 값을 전달하는 요청 파라미터의 이름이다. param과 value를 동시에 모두 사용할 수 없으며 하나를 선택하여 사용하는 것은 가능하다.|
+
+> 메서드 : 객체에 소속된 함수  
+> 프로퍼티 : 객체에 소속된 변수
+
+```
+<jsp:setProperty name="자바빈즈 식별이름" property="프로퍼티 이름" value="값" />
+```
+
+</br> 
+
+- 자바빈즈 MemberBean의 멤버 변수인 프로퍼티 id에 admin 값을 저장하기 위한 setProperty 액션 태그의 예이다.
+- 프로퍼티 id에 저장된 값을 출력하려면 name속성 값 member를 통해 getId() 메소드를 호출하면 된다.
+
+```
+[setProperty 액션 태그 사용 예]
+<jsp:setProperty name="member" property="id" value="admin"/>
+```
+
+```
+[자바빈즈 프로퍼티 값 출력 예]
+<% out.println("아이디 : " +member.getId()); %>
+```
+
+</br> 
+
+앞의 예에서 name 속성 값은 자바빈즈를 식별하기 위해 사용한 useBean 액션 태그의 id 속성값이다.
+그러므로 setProperty 액션 태그를 사용하려면 다음과 같이 useBean 액션 태그에 id 속성 값이 설정되어 있어야 한다.
+```
+<jsp:useBean id="member" class="com.dto.MemberBean" scope="page"/>
+```
+
+</br>
+
+**setProperty 액션 태그의 예**
+- 요청 파라미터 이름과 자바빈즈의 프로퍼티 이름이 일치하는 경우 : 다음은 폼 페이지에서 요청 파라미터 이름이 자바빈즈의 프로퍼티 이름과 동일하여 id로 값이 전달되는 예
+
+```
+//폼 페이지
+<form action="memberProcess.jsp" method ="post">
+    <input name="id" value="admin" />
+</form>
+
+//jsp 페이지
+<jsp:setProperty name="member" property="id" />
+```
+
+</br>
+
+- 요청 파라미터 이름과 자바빈즈의 프로퍼티 이름이 일치하지 않는 경우 : 다음은 폼 페이지에서 요청 파라미터 이름이 자바빈즈의 프로퍼티 이름과 동일하지 않아 id가 아닌 userId로 값이 전달되는 예
+
+```
+//폼 페이지
+<form action="memberProcess.jsp" method ="post">
+    <input name="userId" value="admin" />
+</form>
+
+//jsp 페이지
+<jsp:setProperty name="member" property="id" param="userId" />
+```
+
+</br>
+
+- 요청 파라미터 이름과 자바빈즈의 프로퍼티 이름이 모두 일치하는 경우 : 다음은 폼 페이지에서 모든 요청 파라미터 이름이 자바빈즈의 모든 프로퍼티 이름과 동일하게 값이 전달되는 예
+
+```
+//폼 페이지
+<form action="memberProcess.jsp" method="post">
+    <input name="id" value="admin" />
+    <input name="name" value="관리자" />
+</form>
+
+//jsp 페이지
+<jsp:setProperty name="member" property= "*" />
+```
+
+
+### getProperty 액션 태그로 프로퍼티의 값 가져오기
+
+- getProperty 액션 태그는 useBean 액션 태그와 함께 자바빈즈의 Getter() 메소드에 접근하여 자바빈즈의 멤버 변수인 프로퍼티의 값을 가져오는 태그
+- 형식
+
+```
+<jsp:getProperty name="자바빈즈 식별이름" property="프로퍼티 이름" />
+```
+
+<br>
+
+getProperty 액션 태그의 속성
+|속성|설명|
+|---|---|
+|name|useBean 태그에 id 속성 값으로 설정된 자바빈즈를 식별하기 위한 이름이다.|
+|property|자바빈즈의 프로퍼티 이름이다. 만약 프로퍼티 이름에 * 를 사용하면 모든 요청 파라미터가 자바빈즈 프로퍼티의 Getter() 메소드에 전달됨을 의미한다.|
+
+```
+[getProperty 액션 태그 사용 예]
+<jsp:getProperty name="member" property="name" />
+
+[자바빈즈의 프로퍼티 값 출력 예]
+<% out.println(member.getName()); %>]
+```
