@@ -394,3 +394,40 @@ getProperty 액션 태그의 속성
 |getAttributeNames()|java.util.Enumeration|해당 내장 객체의 모든 속성 이름을 가져온다.(단, pageContext 내장 객체는 이 메소드를 제공하지 않는다.)|
 
 ## request 내장 객체의 기능과 사용법
+
+- 가장 많이 사용되는 기본 내장 객체
+- 웹 브라우저에서 서버의 JSP 페이지로 전달하는 정보를 저장한다.
+- 폼 페이지로부터 입력된 데이터를 전달하는 요청 파라미터 값을 JSP 페이지로 가져온다.
+- JSP 컨테이너는 웹 브라우저에서 서버로 전달되는 정보를 처리하기 위해 javax.servlet.http.HttpServletRequest 객체 타입의 request 내장 객체를 사용하여 사용자의 요구 사항을 얻어낸다.
+
+</br>
+
+### 요청 파라미터 관련 메소드
+
+- 요청 파라미터는 사용자가 폼 페이지에 데이터를 입력한 후 서버에 전송할 때 전달되는 폼 페이지의 입력된 정보 형태를 말한다.
+- 요청 파라미터는 <name=value> 형식으로 웹 브라우저에서 서버의 JSP 페이지로 전송된다.
+- 요청 파라미터 관련 메소드의 종류
+
+|요청 파라미터 관련 메소드|반환 유형|설명|
+|----------------------|--------|----|
+|getParameter(String name)|String|요청 파라미터 이름이 name인 값을 전달받는다. </br> 요청 파라미터 값이 없으면 null을 반환한다.|
+|getParameterValues(String name)|String[]|모든 요청 파라미터 이름이 name인 값을 배열 형태로 전달받는다. </br> 요청 파라미터 값이 없으면 null을 반환한다.|
+|getParameterNames()|java.util.Enumeration|모든 요청 파라미터의 이름과 값을 Enumeration 객체 타입으로 전달받습니다.|
+|getParameterMap()|java.util.Map|모든 요청 파라미터의 이름과 값을 Map 객체 타입으로 전달받는다. </br> [Map 객체 타입은 (요청 파라미터 이름, 값) 형식으로 구성된다.]|
+
+
+### 요청 HTTP 헤더 관련 메소드
+
+- 웹 브라우저는 HTTP 헤더에 부가적인 정보를 담아 서버로 전송한다.
+- request 내장 객체는 헤더 정보나 쿠키 관련 정보를 얻을 수 있는 메소드를 제공한다.
+
+|요청 HTTP 헤더 관련 메소드|반환 유형|설명|
+|------------------------|--------|----|
+|getHeader(String name)|String|설정한 name의 헤더 값을 가져온다.|
+|getHeaders(String name)|Enumeration|설정한 name의 헤더 목록 값을 가져온다.|
+|getHeaderNames()|Enumeration|모든 헤더의 이름을 가져온다.|
+|getIntHeader(String name)|int|설정한 name의 헤더 값을 정수로 가져온다.|
+|getDateHeader(String name)|long|설정한 name의 헤더 값을 시간 값으로 가져온다.|
+|getCookies()|javax.servlet.http.Cookie|모든 쿠키 값을 가져온다.|
+
+### 웹 브라우저/서버 관련 
