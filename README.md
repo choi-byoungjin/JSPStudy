@@ -50,8 +50,9 @@ JspDestroy() - 소멸
 |------|---|---|
 |선언문|<%!...%>|자바 변수나 메소드를 정의하는데 사용|
 |스크립틀릿|<%...%>|자바 로직 코드를 작성하는데 사용|
-|표현문|<%=...%>|변수, 계산식, 메소드 호출 결과를 문자열 형태로 출력하는데 
+|표현문|<%=...%>|변수, 계산식, 메소드 호출 결과를 문자열 형태로 출력하는데 사용| 
 </br>
+
 ## 선언문 태그 사용법
 - 선언문 태그에 선언된 변수와 메소드는 JSP 페이지 임의의 위치에서 선언할 수 있으며, 스크립틀릿 태그보다 나중에 선언해도 스크립틀릿 태그에서 사용할 수 있음
 - 선언문 태그로 선언된 변수는 전역변수로 사용되고, 선언문 태그로 선언된 메소드는 전역변수처럼 전역 메소드로 사용됩니다.
@@ -109,6 +110,22 @@ JspDestroy() - 소멸
 ## 액션 태그 개요
 액션 태그는 서버나 클라이언트에게 어떤 행동을 하도록 명령하는 태그
   - 액션 태그를 사용하는 이유</br> 액션 태그는 스크립트 태그와 마찬가지로 JSP 페이지에서 자바 코드를 삽입할 수 잇는 태그이다. 액션 태그는 스크립트 태그를 이용하여 JSP 페이지에 직접 자바 코드를 작성하는 것을 피하기 위해 사용한다. 즉 JSP 페이지를 작성할 때 자바 코드의 삽입을 되도록 최소화하여 유지 보수를 효율적으로 하는 것이 그 목적이다.
+
+## 액션 태그 종류
+
+|액션 태그|형식|설명|
+|--------|----|---|
+|forward|<jsp:forward ... />|다른 페이지로의 이동과 같은 페이지 흐름을 제어한다.|
+|include|<jsp:include ... />|외부 페이지의 내용을 포함하거나 페이지를 모듈화한다.|
+|useBean|<jsp:useBean ... />|JSP 페이지에 자바빈즈를 설정합니다.|
+|setProperty|<jsp:setProperty ... />|자바빈즈의 프로퍼티 값을 설정한다.|
+|getProperty|<jsp:getProperty ... />|자바빈즈의 프로퍼티 값을 얻어온다.|
+|param|<jsp:param ... />|<jsp:forward>, <jsp:include>, <jsp:plugin> 태그에 인자를 추가한다.|
+|plugin|<jsp:plugin ... />|웹 브라우저에 자바 애플릿을 실행한다. 자바 플러그인에 대한 </br> OBJECT 또는 EMBED 태그를 만드는 브라우저별 코드를 생성한다.|
+|element|<jsp:element ... />|동적 XML 요소를 설정한다.|
+|attribute|<jsp:attribute ... />|동적으로 정의된 XML 요소의 속성을 설정한다.|
+|body|<jsp:body ... />|동적으로 정의된 XML 요소의 몸체를 설정한다.|
+|text|<jsp:text ... />|JSP 페이지 및 문서에서 템플릿 텍스트를 작성한다.|
 
 ## forward 액션 태그의 기능과 사용법
 - 현재 JSP 페이지에서 다른 페이지로 이동하는 태그
@@ -340,3 +357,40 @@ getProperty 액션 태그의 속성
 [자바빈즈의 프로퍼티 값 출력 예]
 <% out.println(member.getName()); %>]
 ```
+
+</br>
+
+# 내장 객체
+
+## 내장 객체의 개요
+
+- JSP 페이지에 사용할 수 있도록 JSP 컨테이너에 미리 정의된 객체
+- JSP 페이지가 서블릿 프로그램으로 변역될 때 JSP 컨테이너가 자동으로 내장 객체를 멤버 변수, 메소드 매개변수 등의 각종 참조 변수(객체)로 포함한다.
+- JSP 페이지에 별도의 import 문 없이 자유롭게 사용할 수 있다.
+- 스크립틀릿 태그나 표현문 태그에 선언을 하거나 객체를 생성하지 않고도 직접 호출하여 사용할 수 있다.
+- 내장 객체의 종류
+
+|내장 객체|반환 유형|설명|
+|--------|--------|----|
+|request|javax.servlet.http.HttpServletRequest|웹 브라우저의 HTTP 요청 정보를 저장한다.|
+|response|javax.servlet.http.HttpServletResponse|웹 브라우저의 HTTP 요청에 대한 응답 정보를 저장한다.|
+|out|javax.servlet.jsp.jsp.jspWriter|JSP 페이지에 출력할 내용을 담고 있는 출력 스트림이다.|
+|session|javax.servlet.http.HttpSession|웹 브라우저의 정보를 유지하기 위한 세션 정보를 저장한다.|
+|application|javax.servlet.ServletContext|웹 애플리케이션의 콘텍스트 정보를 저장한다.|
+|pageContext|javax.servlet.jsp.PageContext|JSP 페이지의 정보를 저장한다.|
+|page|javax.lang.Object|JSP 페이지를 구현한 자바 클래스로 JSP 페이지 자체를 나타낸다.|
+|config|javax.servlet.ServletConfig|JSP 페이지의 설정 정보를 저장한다.|
+|exception|javax.lang.Throwable|JSP 페이지의 예외 발생을 처리한다.|
+
+- 모든 내장 객체는 JSP 컨테이너가 관리하는 객체로, 이 중 request, session, application, pageContext를 이용하여 속성을 관리할 수 있다.
+- 속성은 각각의 내장 객체가 존재하는 동안 JSP 페이지 사이에서 정보를 주고받거나 공유하는 데 사용된다.
+- 속성 처리 메소드의 종류
+
+|메소드|반환 유형|설명|
+|-----|--------|----|
+|setAttribute(String name, Object value)|void|해당 내장 객체의 속성 이름이 name인 속성 값을 value로 저장한다.|
+|getAttribute(String name)|Object|해당 내장 객체의 속성 이름이 name인 속성 값을 가져온다.|
+|removeAttribute(String name)|void|해당 내장 객체의 속성 이름이 name인 속성을 삭제한다.|
+|getAttributeNames()|java.util.Enumeration|해당 내장 객체의 모든 속성 이름을 가져온다.(단, pageContext 내장 객체는 이 메소드를 제공하지 않는다.)|
+
+## request 내장 객체의 기능과 사용법
