@@ -415,6 +415,7 @@ getProperty 액션 태그의 속성
 |getParameterNames()|java.util.Enumeration|모든 요청 파라미터의 이름과 값을 Enumeration 객체 타입으로 전달받습니다.|
 |getParameterMap()|java.util.Map|모든 요청 파라미터의 이름과 값을 Map 객체 타입으로 전달받는다. </br> [Map 객체 타입은 (요청 파라미터 이름, 값) 형식으로 구성된다.]|
 
+</br>
 
 ### 요청 HTTP 헤더 관련 메소드
 
@@ -430,4 +431,129 @@ getProperty 액션 태그의 속성
 |getDateHeader(String name)|long|설정한 name의 헤더 값을 시간 값으로 가져온다.|
 |getCookies()|javax.servlet.http.Cookie|모든 쿠키 값을 가져온다.|
 
-### 웹 브라우저/서버 관련 
+</br>
+
+### 웹 브라우저/서버 관련 메소드
+
+- request 내장 객체는 웹 브라우저의 요청 및 서버 관련 정보를 얻을 수 있는 메소드를 제공한다.
+- 웹 브라우저/서버 관련 메소드의 종류
+
+|웹 브라우저/서버 관련 메소드|반환 유형|설명|
+|-------------------------|--------|----|
+|getRemoteAddr()|String|웹 브라우저의 IP 주소를 가져온다.|
+|getContentLength()|long|웹 브라우저의 요청 파라미터 길이를 가져온다.|
+|getCharacterEncoding()|String|웹 브라우저의 문자 인코딩을 가져온다.|
+|getContentType()|String|웹 브라우저의 콘텐츠 유형을 가져온다.|
+|getProtocol()|String|웹 브라우저의 요청 프로토콜을 가져온다.|
+|getMethod()|String|웹 브라우저의 HTTP 요정 메소드(GET, POST)를 가져온다.|
+|getRequestURI()|String|웹 브라우저가 요청한 URI 경로를 가져온다.|
+|getContextPath()|String|현재 JSP 페이지의 웹 애플리케이션 콘텍스트 경로를 가져온다.|
+|getServerName()|String|서버 이름을 가져온다.|
+|getServerPort|int|실행 중인 서버 포트 번호를 가져온다.|
+|getQueryString|String|웹 브라우저의 전체 요청 파라미터 문자열[물음표(?) 다음 URL에 할당된 문자열]을 가져온다.|
+
+> 속성을 공유할 수 있는 유효 범위
+> 내장 객체가 존재하는 동안 사용할 수 있는 속성의 영역(scope)은 page, request, session, application이다.
+> 
+> |영역|내장 객체|속성의 유효 범위|
+> |----|--------|--------------|
+> |page|pageContext|해당 페이지가 클라이언트에게 서비스를 제공하는 동안 유효하다.|
+> |request|request|클라이언트의 요청이 처리되는 동안 유효하다.|
+> |session|session|세션이 유지되는 동안 유효하다.|
+> |application|application|웹 애플리케이션이 실행되고 있는 동안 유효하다.|
+
+</br>
+
+## response 내장 객체의 기능과 사용법
+
+- response 내장 객체는 사용자의 요청을 처리한 결과를 서버에서 웹 브라우저로 전달하는 정보를 저장한다.
+- 즉, 서버는 응답 헤더와 요청 처리 결과 데이터를 웹 브라우저로 보낸다.
+- JSP 컨테이너는 서버에서 웹 브라우저로 응답하는 정보를 처리하기 위해 javax.servlet.http.HttpServletResponse 객체 타입의 response 내장 객체를 사용하여 사용자의 요청에 응답한다.
+
+</br>
+
+### 페이지 이동 관련 메소드
+
+- 서버는 웹 브라우저에 다른 페이지로 강제 이동하도록 response 내장 객체의 리다이렉션 메소드를 제공한다.
+- 리다이렉션이란 사용자가 새로운 페이지를 요청할 때와 같이 페이지를 강제로 이동하는 것이다.
+
+> 페이지 이동 방법
+> - 포워드(forward) 방식 : 현재 JSP 페이지에서 이동할 URL로 요청 정보를 그대로 전달하므로 사용자가 최초로 요청한 정보가 이동된 URL에서도 유효하다. 이동된 URL이 웹 브라우저의 주소 창에 나타나지 않고 처음 요청한 URL이 나타나기 때문에 이동 여부를 사용자가 알 수 없다.
+> ```
+> <jsp:forward page="이동할 페이지" />
+> ```
+> - 리다이렉트(redirect) 방식 : 현재 JSP 페이지로부터 이동할 URL을 웹 브라우저로 반환한다. 이때 웹 브라우저에서는 새로운 요청을 생성하여 이동할 URL에 다시 요청을 전송하므로 처음 보낸 요청 정보가 이동된 URL에서는 유효하지 않다. 이동된 URL이 웹 브라우저의 주소 창에 보인다.
+> ```
+> response.sendRedirect("이동할 페이지")
+> ```
+
+- 페이지 이동 관련 메소드의 종류
+
+|페이지 이동 관련 메소드|반환 유형|설명|
+|---------------------|--------|---|
+|sendRedirect(String url)|void|설정한 URL 페이지로 강제 이동한다.|
+
+<br>
+
+### 응답 HTTP 레더 관련 메소드
+
+- 응답 HTTP 헤더 관련 메소드는 서버가 웹 브라우저에 응답하는 정보에 헤더를 추가하는 기능을 제공한다.
+- 헤더 정보에는 주로 서버에 대한 정보가 저장되어 있다.
+- 응답 HTTP 헤더 관련 메소드의 종류
+
+|응답 HTTP 헤더 관련 메소드|반환 유형|설명|
+|------------------------|--------|----|
+|addCookie(Cookie cookie)|void|쿠키를 추가한다.|
+|addDateHeader(String name, long date)|voie|설정한 헤더 이름 name에 날짜/시간을 추가한다.|
+|addHeader(String name, String value)|void|설정한 헤더 이름 name에 value를 추가한다.|
+|addIntHeader(String name, int value)|void|설정한 헤더 이름 name에 정수 값 value를 추가한다.|
+|setDateHeader(String name, long date)|voie|설정한 헤더 이름 name에 날짜/시간을 설정한다.|
+|setHeader(String name, String value)|void|설정한 헤더 이름 name에 문자열 값 value를 설정한다.|
+|setIntHeader(String name, int value)|void|설정한 헤더 이름 name에 정수 값 value를 설정한다.|
+|containsHeader(String name)|boolean|설정한 헤더 이름 name이 HTTP 헤더에 포함되었는지 여부를 확인한다. 포함하고 있는 경우 true를 반환하고, 그렇지 않은 경우 false를 반환한다.|
+|getHeader(String name)|String|설정한 헤더 이름 name 값을 가져온다.|
+
+</br>
+
+### 응답 콘텐츠 관련 메소드
+
+- response 내장 객체는 웹 브라우저로 응답하기 위해 MIME 유형, 문자 인코딩, 오류 메시지, 상태 코드 등을 설정하고 가져오는 응답 콘텐츠 관련 메소드를 제공한다.
+- 응답 콘텐츠 관련 메소드의 종류
+
+|응답 콘텐츠 관련 메소드|반환 유형|설명|
+|---------------------|--------|----|
+|setContentType(String type)|void|웹 브라우저에 응답할 MIME 유형을 설정한다.|
+|getContentType()|String|웹 브라우저에 응답할 MIME 유형을 가져온다.|
+|getCharacterEncoding(String charset)|void|웹 브라우저에 응답할 문자 인코딩을 설정한다.|
+|getCharacterEncoding()|String|웹 브라우저에 응답할 문자 인코딩을 가져온다.|
+|sendError(int status_code, String message)|void|웹 브라우저에 응답할 오류(코드 및 오류 메시지)를 설정한다.|
+|setStatus(int statuscode)|void|웹 브라우저에 응답할 HTTP 코드를 설정한다.|
+
+</br>
+
+### out 내장 객체의 기능과 사용법
+
+- out 내장 객체는 웹 브라우저에 데이터를 전송하는 출력 스트림 객체이다.
+- JSP 컨테이너는 JSP 페이지에 사용되는 모든 표현문 태그와 HTML, 일반 텍스트 등을 out 내장 객체를 통해 웹 브라우저에 그대로 전달한다.
+- out 내장 객체는 스크립틀릿 태그에 사용하여 단순히 값을 출력하는 표현문 태그(<%=...%>)와 같은 결과를 얻을 수 있다.
+- out 내장 객체 메소드의 종류
+
+|out 내장 객체 메소드|반환 유형|설명|
+|------------------|---------|----|
+|print(String str)|void|설정된 str 값을 웹 브라우저에 출력한다.|
+|println(String str)|void|설정된 str 값을 웹 브라우저에 출력한다. 이때 줄 바꿈이 적용되지 않는다.|
+|newLine()|void|줄바꿈을 출력한다.|
+|getBufferSize()|int|현재 출력 버퍼의 크기를 가져온다.|
+|getRemaining()|int|현재 남아 있는 출력 버퍼의 크기를 가져온다.|
+|clear()|void|현재 출력 버퍼에 저장되어 있는 내용을 웹 브라우저에 전송하지 않고 비운다. </br> 만약 버퍼가 이미 플러시되었다면 IOException이 발생한다.|
+|clearBuffer()|void|현재 출력 버퍼에 저장되어 있는 내용을 웹 브라우저에 전송하지 않고 비운다. </br> 만약 버퍼가 이미 플러시되었다면 IOException이 발생하지 않는다.|
+|flush()|void|현재 출력 버퍼에 저장되어 있는 내용을 웹 브라우저에 전송하고 비운다.|
+|isAutoFlush()|boolean|출력 버퍼가 채워졌을 때의 처리를 결정한다. 자동으로 플러시하는 경우 true를 반환하고, 그렇지 않은 경우 false를 반환한다.|
+
+</br>
+
+# 폼 태그
+
+## 폼 처리의 개요
+
+- 
