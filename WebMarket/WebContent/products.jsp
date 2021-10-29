@@ -27,7 +27,7 @@
 				<h3><%=product.getPname() %></h3>
 				<p><%=product.getDescription() %>
 				<p><%=product.getUnitPrice() %>원 <!-- Product 객체 타입의 변수 product에 저장된 상품명, 상품 상세 정보, 상품 가격을 출력하도록 표현문 태그를 작성한다. -->
-				<p> <a href="./product.jsp?id=<%=product.getProductId() %>" class="btn btn-secondary" role="button">상세 정보 &raquo;</a>
+				<p> <a href="./product.jsp?id=<%=product.getProductId() %>" class="btn btn-secondary" role="button">상세 정보 &raquo;</a> <!-- 상품 아이디에 대한 상세 정보 페이지가 연결되도록 <상세 정보> 버튼을 작성한다. -->
 			</div>
 			<%
 				}
