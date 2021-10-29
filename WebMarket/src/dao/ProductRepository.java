@@ -35,7 +35,21 @@ public class ProductRepository {
 		listOfProducts.add(tablet);
 		
 	}//11~36 : 기본 생성자를 만든 후 3개의 상품 정보를 설정하고 ArrayList<Product> 객체 타입의 변수 listOfProducts에 저장하도록 작성한다.
+	
 	public ArrayList<Product> getAllProducts(){
 		return listOfProducts;
 	}//객체 타입의 변수 listOfProducts에 저장된 모든 상품 목록을 가져오는 getAllProduct()메소드를 작성한다.
+	
+	public Product getProductById(String productId) {
+		Product productById = null;
+		
+		for (int i = 0; i < listOfProducts.size(); i++) {
+			Product product = listOfProducts.get(i);
+			if (product != null && product.getProductId() != null && product.getProductId().equals(productId)) {
+				productById = product;
+				break;
+			}
+		}
+		return productById;
+	} //43~54 : 객체 변수 listOfProducts에 저장된 모든 상품 목록에서 상품 아이디와 일치하는 상품을 가져오는 getProductById() 메소드를 작성한다.
 }
