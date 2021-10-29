@@ -2,8 +2,7 @@
 <%@ page import="java.util.Date" %>
 <html>
 <head>
-<link rel = "stylesheet"
-	href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <title>Welcome</title>
 </head>
 <body>
@@ -23,6 +22,7 @@
 				<%= tagline %>
 			</h3>
 			<%
+				response.setIntHeader("Refresh", 5); //5초마다 갱신되도록 setIntHeader() 메소드를 작성
 				Date day = new java.util.Date(); //현재 날짜와 시각을 얻어오기 위해 Date 클래스의 인스턴스 day를 생성합니다.
 				String am_pm;
 				int hour = day.getHours();
