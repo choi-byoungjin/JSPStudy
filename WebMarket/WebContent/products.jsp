@@ -2,7 +2,6 @@
 <%@ page import="java.util.ArrayList" %> <!-- java.util.ArrayList 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성한다. -->
 <%@ page import="dto.Product" %> <!-- 생성된 상품 클래스 dto.Product 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성한다. -->
 <%@ page import="dao.ProductRepository" %> <!-- 기존에 작성된 useBean 액션 태그를 삭제하고 상품 접근 틀래스 dao.ProductRepository 패키지로 변경한다. 이때 상품 접근 클래스 dao.ProductRepository 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성한다. -->
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" /> <!-- 자바빈즈로 생성한 ProductRepository 클래스를 사용하도록 useBean 액션 태그를 작성한다. -->
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">

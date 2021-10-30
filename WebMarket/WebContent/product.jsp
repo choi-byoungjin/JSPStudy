@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page import="dto.Product" %> <!-- 생성한 상품 클래스 dto.Product 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성한다. -->
-<jsp:useBean id="productDAO" class="dao.ProductRepository" scope="session" /><!-- 자바빈즈로 생성한 ProductRepository 클래스를 사용하도록 useBean 액션 태그를 작성한다. -->
+<%@ page import="dao.ProductRepository" %> <!-- 기존에 작성된 useBean 액션 태그를 삭제하고 상품 접근 클래스 dao.ProductRepository 패키지로 변경한다. 이때 상품 접근 클래스 dao.ProductRepository 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성합니다. -->
 <html>
 <head>
 <link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -15,7 +15,8 @@
 	</div>
 	<%
 		String id = request.getParameter("id"); //상품 목록 페이지로부터 전달되는 상품 아이디를 전송받도록 request 내장 객체의 getParameter() 메소드를 작성한다.
-		Product product = productDAO.getProductById(id); //useBean 액션 태그에 id 속성 값을 통해 ProdutRepository 클래스의 getProductById() 메소드를 호출하여 반환된 결과 값을 Product 객체 타입의 변수 product에 저장하도록 작성한다.
+		ProductRepository dao = ProductRepository.getInstance();
+		Product product = dao.getProductById(id); //7~8 : ProductRepository 클래스의 객체 변수 instance를 호출하는 getInstance() 메소드를 작성한다. 이를 통해 getProductById() 메소드를 호출하여 반환 결과 값을 Product 객체 타입의 변수 product에 저장한다.
 	%>
 	<div class="container">
 		<div class="row">
