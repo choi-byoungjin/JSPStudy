@@ -23,7 +23,7 @@
 				<h3><%=product.getPname() %></h3>
 				<p><%=product.getDescription() %>
 				<p> <b>상품 코드 : </b><span class="badge badge-danger"> <%=product.getProductId() %></span>
-				<p> <b>제조사</b> : <%=product.getMenufacturer() %>
+				<p> <b>제조사</b> : <%=product.getManufacturer() %>
 				<p> <b>분류</b> : <%=product.getCategory() %>
 				<p> <b>재고 수</b> : <%=product.getUnitsInStock() %>
 				<h4><%=product.getUnitPrice()%>원</h4> <!-- 23~29 : Product 객체 타입의 변수 product에 저장된 상품명 상품 상세 정보, 상품 코드, 제조사, 분류, 재고 수, 상품 가격 등을 출력하도록 표현문 태그를 작성한다.  -->
