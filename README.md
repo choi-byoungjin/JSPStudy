@@ -750,3 +750,6 @@ String 변수 = request.getParameter(요청 파라미터 이름);
 |hasMoreElements()||Enumeration(열거형) 요소가 있으면 true를 반환하고, 그렇지 않으면 false를 반환한다.|
 |nextElement()||Enumeration 요소를 반환한다.|
 
+</br>
+
+# 파일 업로드
