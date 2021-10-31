@@ -753,3 +753,84 @@ String 변수 = request.getParameter(요청 파라미터 이름);
 </br>
 
 # 파일 업로드
+
+## 파일 업로드의 개요
+
+- 파일 업로드는 웹 브라우저에서 서버로 파일을 전송하여 서버에 저장하는 것을 말한다.
+- 웹 브라우저에서 서버로 파일을 전송하기 위해 JSP 페이지에 폼 태그를 사용하고, 전송된 파일을 서버에 저장하기 위해 오픈 라이브러리를 이용해야 한다.
+
+### 파일 업로드를 위한 JSP 페이지
+
+- 폼 태그를 작성할 때 규칙을 따라야 한다.
+
+```
+<form action ="JSP 파일" method="POST" enctype="multipart/form-data">
+    <input type="file" name="요청 파라미터 이름">
+</form>
+```
+
+1. form 태그의 method 속성은 반드시 POST 방식으로 설정해야 한다.
+2. form 태그의 enctype 속성은 반드시 multipart/form-data로 설정해야 한다.
+3. form 태그의 action 속성은 파일 업로드를 처리할 JSP 파일로 설정해야 한다.
+4. 파일 업로드를 위해 input 태그의 type 속성을 file로 설정해야 한다. </br> 만약 여러 파일을 업로드하려면 2개 이상의 input 태그를 사용하고 name 속성에 서로 다른 값을 설정한다.
+
+### 파일 업로드 처리 방식
+
+- 웹 브라우저에서 서버로 파일을 업로드하면 서버는 요청 파라미터를 분석하여 파일을 찾고 서버의 자원(파일 저장 폴더)에 저장하는 과정을 거친다.
+- 파일 업로드의 처리는 단순한 자바 코드로 작성하여 처리할 수 없어 다음과 같이 오픈 라이브러리를 사용해야 한다.
+
+|종류|특징|필요한 라이브러리|
+|----|----|--------------|
+|MultipartRequest 이용하기|가장 간단한 방법|cos.jar|
+|아파치 API 이용하기|편리하고 강력한 API 제공|commons-fileupload.jar </br> commons-io.jar|
+
+</br>
+
+## MultipartRequest를 이용한 파일 업로드
+
+- MultipartRequest는 웹 페이지에서 서버로 업로드되는 파일 자체만 다루는 클래스이다.
+- 웹 브라우저가 전송한 multipart/form-data 유형과 POST 방식의 요청 파라미터 등을 분석한 후 일반 데이터와 파일 데이터를 구분하여 파일 데이터에 접근한다.
+- MultipartRequest 클래스는 cos(com.oreilly.servlet) 패키지에 포함되어 있는 파일 업로드 컴포넌트로, 오픈 라이브러리 cos.jar를 다음 배포 사이트에서 직접 다운로드해서 사용한다.
+- JSP 페이지에 page 디렉티브 태그의 import 속성을 사용하여 패키지 com.oreilly.servlet.* 을 설정해야 한다. </br>
+- 배포 사이트 : http://www.servlets.com/cos/
+- 다운로드 파일 : cos-26Dec2008.zip
+
+### MultipartRequest 클래스 생성
+
+- MultipartRequest 클래스에서 업로드되는 파일이 서버에 저장된 기존 파일과 중복될 때 자동으로 변경해주는 생성자의 형식
+
+```
+MultipartRequest(javax.servlet.http.HttpServletRequest request,
+          java.lang.String  saveDirectory,
+          int maxPostSize,
+          java.lang.String  encoding,
+          FileRenamePolicy  policy)
+```
+
+- MultipartRequest 생성자의 매개변수
+
+|매개변수|설명|
+|-------|----|
+|request|Request 내장 객체를 설정한다.|
+|saveDirectory|서버의 파일 저장 경로를 설정한다.|
+|maxPostSize|파일의 최대 크기(바이트 단위)를 설정한다. 최대 크기를 초과하면 IOException이 발생한다.|
+|encoding|인코딩 유형을 설정한다.|
+|policy|파일명 변경 정책을 설정한다. saveDirectory에 파일명이 중복되는 경우 덮어쓰기 여부를 설정하며, 설정하지 않으면 덮어쓴다.|
+
+</br>
+
+### MultipartRequest 메소드
+
+- 웹 브라우저에서 전송한 multipart/form-data 유형의 요청 파라미터를 쉽게 읽어오고 파일을 업로드할 수 있도록 MultipartRequest 클래스에는 다양한 메소드가 있다.
+- MultipartRequest 메소드의 종류
+
+|메소드|유형|설명|
+|-----|----|----|
+|getContentType(String name)|String|업로드된 파일의 콘텐츠 유형을 반환한다. </br> 업로드된 파일이 없으면 null을 반환한다.|
+|getParameter(String name)|String|요청 파라미터 이름이 name인 값을 전달받는다.|
+|getParameterNames()|java.util.Enumeration|요청 파라미터 이름을 Enumeration 객체 타입으로 반환한다.|
+|getFile(String name)|java.io.File|서버에 업로드된 파일에 대한 파일 객체를 반환한다. </br> 업로드된 파일이 없으면 null을 반환한다.|
+|getFileNames()|java.util.Enumeration|폼 페이지에 input 태그 내 type 속성 값이 file로 설정된 </br> 요청 파라미터의 이름을 반환한다.|
+|getFilesystemName(String name)|String|사용자가 설정하여 서버에 실제로 업로드된 파일명을 반환한다. </br> 파일명이 중복되면 변경된 파일명을 반환한다.|
+|getOriginalFileName(String name)|String|사용자가 업로드한 실제 파일명을 반환한다. </br> 파일명이 중복되면 변경 전의 파일명을 반환한다.|
+
