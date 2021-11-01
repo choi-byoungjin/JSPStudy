@@ -848,10 +848,20 @@ MultipartRequest(javax.servlet.http.HttpServletRequest request,
 |setSizeMax(long sizeMax)|void|최대 파일의 크기를 설정한다.|
 |setSizeThreshold(int sizeThreshold)|void|메모리상에 저장할 최대 크기를 설정한다.|
 |parseRequest(HttpServletRequets req)|List<Fileitem>|multipart/form-data 유형의 요청 파라미터를 가져온다.|
-  
-  
+
 - FileItem 클래스의 메소드
 
 |메소드|유형|설명|
 |-----|----|----|
 |isFormField()|boolean|요청 파라미터가 파일이 아니라 일반 데이터인 경우 true를 반환한다.|
+|getFieldName()|String|요청 파라미터의 이름을 얻어온다.|
+|getString()|String|기본 문자 인코딩을 사용하여 요청 파라미터의 값을 얻어온다.|
+|getString(String encoding)|String|설정한 문자 인코딩을 사용하여 요청 파라미터의 값을 얻어온다.|
+|getName()|String|업로드된 파일(경로 포함)의 이름을 얻어온다.|
+|getSize()|long|업로드된 파일의 크기를 얻어온다.|
+|get()|byte[]|업로드된 파일을 바이트 배열로 얻어온다.|
+|isInMemory()|boolean|업로드된 파일이 메모리에 저장된 상태인 경우 true를 반환하고, </br> 임시 디렉터리에 저장된 경우 false를 반환한다.|
+|delete()|void|파일과 관련된 자원을 삭제한다. 메모리상에 저장된 경우 할당된 메모리를 반환하고, </br> 임시 파일로 저장된 경우 파일을 삭제한다.|
+|write()|void|파일과 관련된 자원을 저장한다.|
+|getContentType()|String|웹 브라우저가 전송하는 콘텐츠 유형을 반환하고, </br> 정의되어 있지 않은 경우 null을 반환한다.|
+
