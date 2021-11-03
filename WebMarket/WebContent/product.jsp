@@ -3,7 +3,7 @@
 <%@ page import="dao.ProductRepository" %> <!-- 기존에 작성된 useBean 액션 태그를 삭제하고 상품 접근 클래스 dao.ProductRepository 패키지로 변경한다. 이때 상품 접근 클래스 dao.ProductRepository 패키지를 사용하기 위해 page 디렉티브 태그의 import 속성을 작성합니다. -->
 <html>
 <head>
-<link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel = "stylesheet" href="./resources/css/bootstrap.min.css" />
 <title>상품 상세 정보</title>
 </head>
 <body>
@@ -20,6 +20,9 @@
 	%>
 	<div class="container">
 		<div class="row">
+			<div class="col-md-5">
+				<img src="./resources/images/<%=product.getFilename() %>" style="width: 100%">
+			</div>
 			<div class="col-md-6">
 				<h3><%=product.getPname() %></h3>
 				<p><%=product.getDescription() %>

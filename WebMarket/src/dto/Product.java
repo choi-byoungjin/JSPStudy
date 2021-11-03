@@ -15,9 +15,16 @@ public class Product implements Serializable{
 	private String category;	//분류
 	private long unitsInStock;	//재고 수
 	private String condition;	//신상품 or 중고품 or 재생품
+	private String filename;	//이미지 파일명
 	
 	public Product() {//기본 생성자 작성하기
 		super();
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	//모든 멤버 변수의 Setter/Getter() 메소드 작성하기
 	public String getProductId() {
