@@ -20,7 +20,7 @@ public class ProductRepository {
 		phone.setManufacturer("Apple");
 		phone.setUnitsInStock(1000);
 		phone.setCondition("New");
-		phone.setFilename("P1234.png");
+		phone.setFilename("P1236.png");
 		
 		Product notebook = new Product("P1235", "LG PC ±×·¥", 1500000);
 		notebook.setDescription("13.3-inch, IPS LED display, 5rd Generation Intel Core processors");
@@ -36,7 +36,7 @@ public class ProductRepository {
 		tablet.setManufacturer("Samsung");
 		tablet.setUnitsInStock(1000);
 		tablet.setCondition("Old");
-		phone.setFilename("P1236.png");
+		phone.setFilename("P1234.png");
 	
 		listOfProducts.add(phone);
 		listOfProducts.add(notebook);

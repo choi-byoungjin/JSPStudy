@@ -25,7 +25,7 @@
 					Product product = listOfProducts.get(i);
 			%> <!-- 22~25 : 객체 타입의 변수 listOfProducts에 저장된 상품 목록 개수만큼 실행하도록 반복문을 작성한다. 24행은 상품 정보를 가져와 Product에 저장하도록 작성한다. -->
 			<div class="col-md-4">
-				<img src="./resources/images/<%=product.getFilename() %>" style="width: 100%">
+				<img src="C:/upload/<%=product.getFilename() %>" style="width: 100%">
 				<h3><%=product.getPname() %></h3>
 				<p><%=product.getDescription() %>
 				<p><%=product.getUnitPrice() %>원 <!-- Product 객체 타입의 변수 product에 저장된 상품명, 상품 상세 정보, 상품 가격을 출력하도록 표현문 태그를 작성한다. -->
