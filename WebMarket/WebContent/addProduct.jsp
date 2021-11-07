@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="./resoures/css/bootstrap.min.css">
 
 <title>상품 등록</title>
 </head>
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<form name="newProduct" action="./processAddProduct.jsp" class="form-horizontal" method="post"> <!-- 입력 양식에 입력된 데이터를 서버로 저송하여 폼 데이터를 처리하도록 form 태그의 action 속성 값, method 방식을 작성한다. -->
+		<form name="newProduct" action="./processAddProduct.jsp" class="form-horizontal" method="post" enctype="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-sm-2">상품 코드</label>
 				<div class="col-sm-3">
@@ -64,6 +64,12 @@
 					<input type="radio" name="condition" value="Refurbished">재생 제품 <!-- 62~64 : 상품 상태 값 중 하나만 선택 입력받도록 input 태그 3개의 type 속성 값을 radio로 작성하고 name 속성 값을 condition으로 작성한다. -->
 				</div>
 			</div>
+			<div class="form-group row">
+				<label class="col-sm-2">이미지</label>
+				<div class="col-sm-5">
+					<input type="file" name="productImage" class="form-control">
+				</div>
+			</div>	<!-- 파일을 입력받도록 input 태그의 type 속성 값을 file로 작성하고 name 속성을 작성한다. -->
 			<div class="form-group row">
 				<div class="col-sm-offset-2 col-sm-10">
 					<input type="submit" class="btn btn-primary" value="등록"> <!-- 입력된 데이터를 서버로 전송하도록 input 태그의 type 속성 값을 submit로 작성한다. -->
